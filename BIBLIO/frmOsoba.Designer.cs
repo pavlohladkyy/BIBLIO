@@ -70,10 +70,12 @@ namespace BIBLIO
             this.txtReitFrom = new System.Windows.Forms.TextBox();
             this.txtPIP = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -85,6 +87,7 @@ namespace BIBLIO
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.Size = new System.Drawing.Size(1008, 314);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
             this.dataGridView1.CellParsing += new System.Windows.Forms.DataGridViewCellParsingEventHandler(this.dataGridView1_CellParsing);
             // 
             // bindingNavigator1
@@ -115,7 +118,7 @@ namespace BIBLIO
             this.bindingNavigator1.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = this.bindingNavigatorPositionItem;
-            this.bindingNavigator1.Size = new System.Drawing.Size(1029, 27);
+            this.bindingNavigator1.Size = new System.Drawing.Size(1309, 27);
             this.bindingNavigator1.TabIndex = 1;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
@@ -430,11 +433,22 @@ namespace BIBLIO
             this.txtPIP.Size = new System.Drawing.Size(142, 22);
             this.txtPIP.TabIndex = 0;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox1.Location = new System.Drawing.Point(1026, 33);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(271, 314);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 5;
+            this.pictureBox1.TabStop = false;
+            // 
             // frmOsoba
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1029, 535);
+            this.ClientSize = new System.Drawing.Size(1309, 535);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.txtFind);
             this.Controls.Add(this.label1);
@@ -450,6 +464,7 @@ namespace BIBLIO
             this.bindingNavigator1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -494,5 +509,6 @@ namespace BIBLIO
         private System.Windows.Forms.ToolStripButton AddNew;
         private System.Windows.Forms.ToolStripButton delete;
         private System.Windows.Forms.ToolStripButton bindingNamvigatorUpdateItem_Click;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

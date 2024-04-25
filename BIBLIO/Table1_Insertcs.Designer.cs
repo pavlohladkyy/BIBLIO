@@ -46,6 +46,12 @@ namespace BIBLIO
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.add = new System.Windows.Forms.Button();
             this.cancel = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -190,7 +196,7 @@ namespace BIBLIO
             // 
             // add
             // 
-            this.add.Location = new System.Drawing.Point(22, 394);
+            this.add.Location = new System.Drawing.Point(23, 612);
             this.add.Name = "add";
             this.add.Size = new System.Drawing.Size(194, 34);
             this.add.TabIndex = 14;
@@ -200,7 +206,7 @@ namespace BIBLIO
             // 
             // cancel
             // 
-            this.cancel.Location = new System.Drawing.Point(295, 394);
+            this.cancel.Location = new System.Drawing.Point(295, 612);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(194, 34);
             this.cancel.TabIndex = 15;
@@ -208,12 +214,53 @@ namespace BIBLIO
             this.cancel.UseVisualStyleBackColor = true;
             this.cancel.Click += new System.EventHandler(this.cancel_Click);
             // 
+            // panel1
+            // 
+            this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Location = new System.Drawing.Point(219, 348);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(270, 221);
+            this.panel1.TabIndex = 16;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(13, 13);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(245, 194);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.TabIndex = 17;
+            this.pictureBox1.TabStop = false;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label8.Location = new System.Drawing.Point(84, 388);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(41, 16);
+            this.label8.TabIndex = 18;
+            this.label8.Text = "фото";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(67, 451);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 19;
+            this.button1.Text = "вибрати";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Table1_Insertcs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.ClientSize = new System.Drawing.Size(514, 440);
+            this.ClientSize = new System.Drawing.Size(514, 672);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.cancel);
             this.Controls.Add(this.add);
             this.Controls.Add(this.textBox7);
@@ -232,6 +279,10 @@ namespace BIBLIO
             this.Controls.Add(this.label1);
             this.Name = "Table1_Insertcs";
             this.Text = "додавання запису в таблицю ";
+            this.Load += new System.EventHandler(this.Table1_Insertcs_Load);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -255,5 +306,9 @@ namespace BIBLIO
         private System.Windows.Forms.TextBox textBox7;
         private System.Windows.Forms.Button add;
         private System.Windows.Forms.Button cancel;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button button1;
     }
 }

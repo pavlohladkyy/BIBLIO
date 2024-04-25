@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -261,6 +262,24 @@ namespace BIBLIO
             h.bs1.DataSource = h.myfunDt("Select *from  catalog_of_users");
             dataGridView1.DataSource = h.bs1;
 
+        }
+
+        private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            int rIndx = dataGridView1.CurrentCell.RowIndex;
+
+
+            if (dataGridView1.Rows[rIndx].Cells[7].Value.ToString().Length > 0)
+            {
+                byte[] a = (byte[])dataGridView1.Rows[rIndx].Cells[7].Value;
+                MemoryStream memImage = new MemoryStream(a);
+                pictureBox1.Image = Image.FromStream(memImage);
+                memImage.Close();
+            }
+            else
+            {
+                pictureBox1.Image = Image.FromFile(@"C:\Users\admin\Desktop\desktop\ОБДЗ\BIBLIO\BIBLIO\bin\Debug\no image.jpeg");
+            }
         }
     }
 }
