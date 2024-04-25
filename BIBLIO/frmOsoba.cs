@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace BIBLIO
         public frmOsoba()
         {
             InitializeComponent();
-            
+
         }
 
         private void frmOsoba_Load(object sender, EventArgs e)
@@ -28,7 +29,7 @@ namespace BIBLIO
             dataGridView1.DataSource = h.bs1;
             bindingNavigator1.BindingSource = h.bs1;
 
-            
+
             h.bs1.Sort = dataGridView1.Columns[2].Name;
 
             DGWFormat();
@@ -41,7 +42,8 @@ namespace BIBLIO
             txtReitFrom.Text = dtBorder.Rows[0][0].ToString();
             txtReitTo.Text = dtBorder.Rows[0][1].ToString();
             dtpDNOFrom.Value = Convert.ToDateTime(dtBorder.Rows[0][2].ToString());
-            dtpDNOTo.Value = Convert.ToDateTime(dtBorder.Rows[0][3].ToString());
+            DateTime.TryParseExact(dtBorder.Rows[0][2].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dnoFrom);
+
             //визначаємо перелік можливих значень текстового поля 
             cmbAdres.Items.Add("");
             for (int i = 0; i < dtDistinct.Rows.Count; i++)
@@ -99,7 +101,7 @@ namespace BIBLIO
 
         private void CancelFind()
         {
-            
+
             label1.Visible = false;
             txtFind.Visible = false;
             txtFind.Text = "";
@@ -122,16 +124,16 @@ namespace BIBLIO
             gfx.DrawLine(p, 35, 5, e.ClipRectangle.Width - 2, 5);
             gfx.DrawLine(p, 0, 5, 0, e.ClipRectangle.Height - 2);
             gfx.DrawLine(p, e.ClipRectangle.Width - 2, 5, e.ClipRectangle.Width - 2, e.ClipRectangle.Height - 2);
-            gfx.DrawLine(p, e.ClipRectangle.Width - 2,  e.ClipRectangle.Width - 2,0, e.ClipRectangle.Height - 2);
+            gfx.DrawLine(p, e.ClipRectangle.Width - 2, e.ClipRectangle.Width - 2, 0, e.ClipRectangle.Height - 2);
 
-           
+
         }
 
         private void btnFilter_Click(object sender, EventArgs e)
         {
             if (btnFilter.Checked)
             {
-                this.Height =500;
+                this.Height = 500;
                 groupBox1.Visible = true;
             }
             else
@@ -145,12 +147,12 @@ namespace BIBLIO
         {
             string strFilter = "";
             strFilter += "id > 0";
-            if(txtPIP.Text!= "")
+            if (txtPIP.Text != "")
             {
                 strFilter += "AND PIPO LIKE '" + txtPIP.Text + "%'";
-               
+
             }
-            
+
 
             h.bs1.Filter = strFilter;
             if ((txtReitFrom.Text != "") && (txtReitTo.Text != ""))
@@ -205,7 +207,7 @@ namespace BIBLIO
             h.curVal10 = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
             h.keyName = dataGridView1.Columns[0].Name;
 
-            delete f3  = new delete();
+            delete f3 = new delete();
             f3.ShowDialog();
 
             h.bs1.DataSource = h.myfunDt("SELECT * from catalog_of_users");
@@ -219,7 +221,7 @@ namespace BIBLIO
             string curColName0 = dataGridView1.Columns[0].Name; //назва стовпця ключового поля
             string curColName = dataGridView1.Columns[curColidx].Name;//назва поточного стовпця
             h.curVal10 = dataGridView1[0, curRowidx].Value.ToString(); //значення клітинки ключового
-                                                                      //поля поточного рядка
+                                                                       //поля поточного рядка
             string newCurCellVal = e.Value.ToString(); //нове значення поточної клітинки
             if (curColName == "PIPO" || curColName == "AdresO" || curColName == "PlaceWorkStudyO" || curColName == "Specialty0")
             {
@@ -236,7 +238,7 @@ namespace BIBLIO
                 newCurCellVal = newCurCellVal.Replace("'", "'");
             }
             //якщо поле дійсне число, тоді в DataGrigView записуємо число з комою, а при запису в БД замінюємо кому на крапку
-            string sqlStr = "UPDATE Katalog SET " + curColName + " = " + newCurCellVal +
+            string sqlStr = "UPDATE catalog_of_users SET " + curColName + " = " + newCurCellVal +
             " WHERE " + curColName0 + " = " + h.curVal10;
             using (MySqlConnection con = new MySqlConnection(h.ConStr))
             {
@@ -261,6 +263,6 @@ namespace BIBLIO
 
         }
     }
-    }
+}
 
 

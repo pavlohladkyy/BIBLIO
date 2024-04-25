@@ -115,7 +115,7 @@ namespace BIBLIO
             this.bindingNavigator1.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = this.bindingNavigatorPositionItem;
-            this.bindingNavigator1.Size = new System.Drawing.Size(1032, 27);
+            this.bindingNavigator1.Size = new System.Drawing.Size(1029, 27);
             this.bindingNavigator1.TabIndex = 1;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
@@ -434,7 +434,7 @@ namespace BIBLIO
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1032, 535);
+            this.ClientSize = new System.Drawing.Size(1029, 535);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.txtFind);
             this.Controls.Add(this.label1);
