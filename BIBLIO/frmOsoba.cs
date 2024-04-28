@@ -10,11 +10,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.OleDb;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Runtime.InteropServices;
+
 
 namespace BIBLIO
 {
+    using System.IO;
     public partial class frmOsoba : Form
     {
+        string path = Path.GetFullPath(@"C:\Users\admin\Desktop\desktop\ОБДЗ\BIBLIO\BIBLIO\bin\Debug\Report\");
+        DataTable dt;
         public frmOsoba()
         {
             InitializeComponent();
@@ -26,10 +33,13 @@ namespace BIBLIO
 
             this.Height = 400;
             h.bs1 = new BindingSource();
-            h.bs1.DataSource = h.myfunDt("Select * from catalog_of_users    ");
+            h.bs1.DataSource = h.myfunDt("Select * from catalog_of_users  ");
             dataGridView1.DataSource = h.bs1;
             bindingNavigator1.BindingSource = h.bs1;
 
+           
+
+            dt = (DataTable)h.bs1.DataSource;
 
             h.bs1.Sort = dataGridView1.Columns[2].Name;
 
@@ -134,12 +144,12 @@ namespace BIBLIO
         {
             if (btnFilter.Checked)
             {
-                this.Height = 500;
+                this.Height = 550;
                 groupBox1.Visible = true;
             }
             else
             {
-                this.Height = 350;
+                this.Height = 420;
                 groupBox1.Visible = false;
             }
         }
@@ -280,6 +290,268 @@ namespace BIBLIO
             {
                 pictureBox1.Image = Image.FromFile(@"C:\Users\admin\Desktop\desktop\ОБДЗ\BIBLIO\BIBLIO\bin\Debug\no image.jpeg");
             }
+        }
+
+        private void btnStream_Click(object sender, EventArgs e)
+        {
+            var srcEncoding = Encoding.GetEncoding(1251);
+
+            //Вибір типу файлу
+            string extend;
+
+            if (rdobtn_tsv.Checked)
+                extend = "tsv";
+            else if (rdobtn_doc.Checked)
+                extend = "doc";
+            else if (rdobtn_xls.Checked)
+                extend = "xls";
+            else
+                extend = "txt";
+
+            string fileName = path+ @"Osoba_Stream." + extend;
+
+            if (File.Exists(fileName))File.Delete(fileName);
+
+            //оголошення потоку
+            StreamWriter wr = new StreamWriter(fileName, false, encoding: srcEncoding);
+
+            //вивід у файл
+            try
+            {
+                //Вивід назви полів
+                //можна вказати для користувача
+                wr.Write("" + "\t" + "Прізвище" + "\t" + "Дата народи." + "\t" + "Адреса" + "\t" + "Вуз" + "\t");
+                wr.WriteLine();
+
+                // АБО вивести назви стовпців у відповідній таблиці
+                for (int i = 0; i < dt.Columns.Count; i++)
+                    wr.Write(dt.Columns[i] + "\t");
+
+                wr.WriteLine();
+
+                //Вивід даних (записів)
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    for (int j = 0; j < dt.Columns.Count; j++)
+                    {
+                        if (dt.Rows[i][j] != null)
+                        {
+                            // У Steran вивід ФОТО не реалізується
+                            if (dt.Columns[j].DataType.ToString() == "System.Byte[]")
+                                wr.Write("OTO" + "\t");
+
+                            // якщо тип даних ДАТА, тоді конвертуємо у формат день місяць-рік
+                            else if (dt.Columns[j].DataType.ToString() == "System.DateTime")
+                                wr.Write(Convert.ToDateTime(dt.Rows[i][j]).ToString("dd/MM/yyyy") + "\t");
+
+                            // якщо тип даних DOUBLE (дійсне число), тоді конвертуєно в дійсне
+                            else if (dt.Columns[j].DataType.ToString() == "System.Double")
+                                wr.Write(Convert.ToDouble(dt.Rows[i][j]).ToString() + "\t");
+
+                            // решту виводимо вк текст
+                            else
+                                wr.Write(Convert.ToString(dt.Rows[i][j]) + "\t");
+                        }
+                        else
+                            wr.Write("\t");
+                    }
+
+                    wr.WriteLine();
+                }
+
+                wr.Close(); //close file
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            MessageBox.Show("Export in Stream Ok");
+        }
+
+        private void btnOLEDB_Click(object sender, EventArgs e)
+        {
+            // Отримання шляху до файлу Excel
+            string fileName = path + @"Osoba_OLEDB.xlsx";
+
+            // Видалення існуючого файлу Excel
+            if (File.Exists(fileName))File.Delete(fileName);
+
+            // Створення рядка з'єднання з таблицею БД в Excel
+            string connectionString = $" Provider = Microsoft.ACE.OLEDB.12.0; Data Source = { fileName }; Extended Properties = \"Excel 12.0 Xml;HDR=YES;\";";
+           
+
+
+            // Створення команди CREATE TABLE для створення таблиці в Excel
+            string commandCreateOleDb = $"CREATE TABLE [MySheet] ([{dt.Columns[0].ColumnName}] int";
+
+            for (int i = 1; i < dt.Columns.Count; i++)
+                commandCreateOleDb += $", [{dt.Columns[i].ColumnName}] string";
+
+            commandCreateOleDb += ")";
+
+            // Створення з'єднання з БД в Excel
+            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            {
+                // Створення команди на створення таблиці
+                using (OleDbCommand cmd = new OleDbCommand(commandCreateOleDb, conn))
+                {
+                    try
+                    {
+                        // Відкриття з'єднання
+                        conn.Open();
+
+                        // Створення таблиці Excel
+                        cmd.ExecuteNonQuery();
+
+                        // Генерація команд INSERT для додавання записів у створену таблицю Excel
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            cmd.CommandText = $"INSERT INTO [MySheet$] VALUES({Convert.ToString(dt.Rows[i][0])}";
+
+                            for (int j = 1; j < dt.Columns.Count; j++)
+                            {
+                                switch (dt.Columns[j].DataType.ToString())
+                                {
+                                    case "System.String":
+                                        cmd.CommandText += $", '{Convert.ToString(dt.Rows[i][j])}'";
+                                        break;
+                                    case "System.Int32":
+                                        cmd.CommandText += $", {Convert.ToInt32(dt.Rows[i][j])}";
+                                        break;
+                                    case "System.Decimal":
+                                        cmd.CommandText += $", {Convert.ToDecimal(dt.Rows[i][j])}";
+                                        break;
+                                    case "System.DateTime":
+                                        cmd.CommandText += $", '{Convert.ToDateTime(dt.Rows[i][j]).ToString("dd/MM/yyyy")}'";
+                                        break;
+                                    default:
+                                        cmd.CommandText += ", 'не конвертовано'";
+                                        break;
+                                }
+                            }
+
+                            cmd.CommandText += ")";
+
+                            // Виконання згенерованої команди INSERT
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Помилка при створенні таблиці або додаванні записів: {ex.Message}");
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                }
+            }
+
+            MessageBox.Show("Export dt to file as OLEDB Ok");
+        }
+
+
+        private void format_Osoba_com(Excel.Application excel, Excel.Worksheet sheet)
+        {
+            int r1, c1, r2, c2;
+            r1 = 1;
+            c1 = 1;
+            r2= dt.Rows.Count+1;
+            c2 = dt.Columns.Count;
+
+            Excel.Range rangeO = (Excel.Range)sheet.Range[sheet.Cells[9, 2], sheet.Cells[9, 2]];
+            Excel.Range range1 = (Excel.Range)sheet.Range[sheet.Cells[r1, c1], sheet.Cells[r2, c2]];
+            Excel.Range range2 = (Excel.Range)sheet.Range[sheet.Cells[10, 1], sheet.Cells[10, 5]];
+
+            range1.Font.Background = true; //po6vo mpudr xpam
+
+            range1.Font.Size = 12; //posmip 20
+
+            range1.Font.Color = ColorTranslator.ToOle(Color.Black);  //xomip - wopxuit
+            range1.Font.Name = "Arial"; //"Times New Roman’
+
+
+
+            range1.Borders.LineStyle = Excel.XlLineStyle.xlContinuous; //pamxa ninia
+            range1.Borders.Weight = Excel.XlBorderWeight.xlThin; //touxa
+            range1.Borders.Color = ColorTranslator.ToOle(Color.Red);
+
+            //Bupismonanua B Hianasoui 3ananTSca TAK:
+            range1.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
+            range1.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
+
+
+           range1.ColumnWidth = 20;
+           rangeO.RowHeight = 35;
+
+
+
+            range1.EntireColumn.AutoFit();  //asro mpuny i sucoTy
+            range1.EntireRow.AutoFit();
+
+            // Konip samen
+            range1.Interior.Color = ColorTranslator.ToOle(Color.Yellow);
+            range2.Merge(Type.Missing); //o8'enuanua miu mianasony
+
+        }
+        private void btnComObject_Click(object sender, EventArgs e)
+        {
+            // Отримання шляху до файлу
+            string fileName = Path.Combine(path, "Osoba_COM.xls");
+
+            // Перевірка існування файлу та його видалення, якщо він вже існує
+            if (File.Exists(fileName))
+                File.Delete(fileName);
+
+            // Створення об'єкта Excel та робочої книги
+            Excel.Application excel = new Excel.Application();
+            Excel.Workbook workbook = excel.Workbooks.Add();
+            Excel.Worksheet sheet = (Excel.Worksheet)workbook.Worksheets[1];
+            sheet.Name = "Читачі";
+
+            // Запис назв стовпців
+            for (int j = 0; j < dt.Columns.Count; j++)
+            {
+                sheet.Cells[1, j + 1].Value = dt.Columns[j].ColumnName;
+            }
+
+            // Запис даних
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                for (int j = 0; j < dt.Columns.Count; j++)
+                {
+                    // Перевірка типу даних та запис даних або тексту "Фото"
+                    if (dt.Columns[j].DataType == typeof(byte[]))
+                    {
+                        sheet.Cells[i + 2, j + 1].Value = "Фото";
+                    }
+                    else
+                    {
+                        sheet.Cells[i + 2, j + 1].Value = dt.Rows[i][j];
+                    }
+                }
+            }
+
+            // Форматування файлу Excel
+            format_Osoba_com(excel, sheet);
+
+            // Збереження файлу Excel
+            workbook.SaveAs(fileName);
+            // Закриття робочої книги
+            workbook.Close();
+            // Закриття Excel
+            excel.Quit();
+
+            // Повідомлення користувачеві
+            MessageBox.Show("Файл xls створено за допомогою COM-об'єктів Excel");
+        }
+
+        private void btnXML_Click(object sender, EventArgs e)
+        {
+            string filename = path + @"\Osoba_XML.xls";
+            dt.WriteXml(filename);
+            MessageBox.Show("File xls cтворено за допомогою розмітки XML");
         }
     }
 }

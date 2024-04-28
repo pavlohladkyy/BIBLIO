@@ -71,17 +71,27 @@ namespace BIBLIO
             this.txtPIP = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnStream = new System.Windows.Forms.Button();
+            this.btnOLEDB = new System.Windows.Forms.Button();
+            this.btnComObject = new System.Windows.Forms.Button();
+            this.btnXML = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.rdobtn_tsv = new System.Windows.Forms.RadioButton();
+            this.rdobtn_doc = new System.Windows.Forms.RadioButton();
+            this.rdobtn_xls = new System.Windows.Forms.RadioButton();
+            this.rdobtn_txt = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 33);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 99);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidth = 51;
@@ -118,7 +128,7 @@ namespace BIBLIO
             this.bindingNavigator1.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = this.bindingNavigatorPositionItem;
-            this.bindingNavigator1.Size = new System.Drawing.Size(1309, 27);
+            this.bindingNavigator1.Size = new System.Drawing.Size(1312, 27);
             this.bindingNavigator1.TabIndex = 1;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
@@ -220,6 +230,7 @@ namespace BIBLIO
             this.AddNew.Name = "AddNew";
             this.AddNew.Size = new System.Drawing.Size(29, 24);
             this.AddNew.Text = "toolStripButton1";
+            this.AddNew.ToolTipText = "add";
             this.AddNew.Click += new System.EventHandler(this.AddNew_Click);
             // 
             // delete
@@ -230,6 +241,7 @@ namespace BIBLIO
             this.delete.Name = "delete";
             this.delete.Size = new System.Drawing.Size(29, 24);
             this.delete.Text = "toolStripButton1";
+            this.delete.ToolTipText = "Remove";
             this.delete.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // bindingNamvigatorUpdateItem_Click
@@ -281,7 +293,7 @@ namespace BIBLIO
             this.groupBox1.Controls.Add(this.txtReitTo);
             this.groupBox1.Controls.Add(this.txtReitFrom);
             this.groupBox1.Controls.Add(this.txtPIP);
-            this.groupBox1.Location = new System.Drawing.Point(12, 363);
+            this.groupBox1.Location = new System.Drawing.Point(12, 439);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(1008, 160);
             this.groupBox1.TabIndex = 4;
@@ -436,18 +448,116 @@ namespace BIBLIO
             // pictureBox1
             // 
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(1026, 33);
+            this.pictureBox1.Location = new System.Drawing.Point(1026, 99);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(271, 314);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
             // 
+            // btnStream
+            // 
+            this.btnStream.Location = new System.Drawing.Point(12, 53);
+            this.btnStream.Name = "btnStream";
+            this.btnStream.Size = new System.Drawing.Size(101, 23);
+            this.btnStream.TabIndex = 6;
+            this.btnStream.Text = "Stream";
+            this.btnStream.UseVisualStyleBackColor = true;
+            this.btnStream.Click += new System.EventHandler(this.btnStream_Click);
+            // 
+            // btnOLEDB
+            // 
+            this.btnOLEDB.Location = new System.Drawing.Point(429, 53);
+            this.btnOLEDB.Name = "btnOLEDB";
+            this.btnOLEDB.Size = new System.Drawing.Size(101, 23);
+            this.btnOLEDB.TabIndex = 7;
+            this.btnOLEDB.Text = "OLEDB";
+            this.btnOLEDB.UseVisualStyleBackColor = true;
+            this.btnOLEDB.Click += new System.EventHandler(this.btnOLEDB_Click);
+            // 
+            // btnComObject
+            // 
+            this.btnComObject.Location = new System.Drawing.Point(578, 53);
+            this.btnComObject.Name = "btnComObject";
+            this.btnComObject.Size = new System.Drawing.Size(101, 23);
+            this.btnComObject.TabIndex = 8;
+            this.btnComObject.Text = "Com Object";
+            this.btnComObject.UseVisualStyleBackColor = true;
+            this.btnComObject.Click += new System.EventHandler(this.btnComObject_Click);
+            // 
+            // btnXML
+            // 
+            this.btnXML.Location = new System.Drawing.Point(727, 53);
+            this.btnXML.Name = "btnXML";
+            this.btnXML.Size = new System.Drawing.Size(101, 23);
+            this.btnXML.TabIndex = 9;
+            this.btnXML.Text = "XML";
+            this.btnXML.UseVisualStyleBackColor = true;
+            this.btnXML.Click += new System.EventHandler(this.btnXML_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.rdobtn_tsv);
+            this.panel1.Controls.Add(this.rdobtn_doc);
+            this.panel1.Controls.Add(this.rdobtn_xls);
+            this.panel1.Controls.Add(this.rdobtn_txt);
+            this.panel1.Location = new System.Drawing.Point(143, 33);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(241, 55);
+            this.panel1.TabIndex = 10;
+            // 
+            // rdobtn_tsv
+            // 
+            this.rdobtn_tsv.AutoSize = true;
+            this.rdobtn_tsv.Location = new System.Drawing.Point(3, 29);
+            this.rdobtn_tsv.Name = "rdobtn_tsv";
+            this.rdobtn_tsv.Size = new System.Drawing.Size(45, 20);
+            this.rdobtn_tsv.TabIndex = 12;
+            this.rdobtn_tsv.Text = "tsv";
+            this.rdobtn_tsv.UseVisualStyleBackColor = true;
+            // 
+            // rdobtn_doc
+            // 
+            this.rdobtn_doc.AutoSize = true;
+            this.rdobtn_doc.Location = new System.Drawing.Point(122, 3);
+            this.rdobtn_doc.Name = "rdobtn_doc";
+            this.rdobtn_doc.Size = new System.Drawing.Size(51, 20);
+            this.rdobtn_doc.TabIndex = 13;
+            this.rdobtn_doc.Text = "doc";
+            this.rdobtn_doc.UseVisualStyleBackColor = true;
+            // 
+            // rdobtn_xls
+            // 
+            this.rdobtn_xls.AutoSize = true;
+            this.rdobtn_xls.Location = new System.Drawing.Point(122, 29);
+            this.rdobtn_xls.Name = "rdobtn_xls";
+            this.rdobtn_xls.Size = new System.Drawing.Size(44, 20);
+            this.rdobtn_xls.TabIndex = 14;
+            this.rdobtn_xls.Text = "xls";
+            this.rdobtn_xls.UseVisualStyleBackColor = true;
+            // 
+            // rdobtn_txt
+            // 
+            this.rdobtn_txt.AutoSize = true;
+            this.rdobtn_txt.Checked = true;
+            this.rdobtn_txt.Location = new System.Drawing.Point(3, 3);
+            this.rdobtn_txt.Name = "rdobtn_txt";
+            this.rdobtn_txt.Size = new System.Drawing.Size(40, 20);
+            this.rdobtn_txt.TabIndex = 11;
+            this.rdobtn_txt.TabStop = true;
+            this.rdobtn_txt.Text = "txt";
+            this.rdobtn_txt.UseVisualStyleBackColor = true;
+            // 
             // frmOsoba
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1309, 535);
+            this.ClientSize = new System.Drawing.Size(1312, 423);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.btnXML);
+            this.Controls.Add(this.btnComObject);
+            this.Controls.Add(this.btnOLEDB);
+            this.Controls.Add(this.btnStream);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.txtFind);
@@ -465,6 +575,8 @@ namespace BIBLIO
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -510,5 +622,14 @@ namespace BIBLIO
         private System.Windows.Forms.ToolStripButton delete;
         private System.Windows.Forms.ToolStripButton bindingNamvigatorUpdateItem_Click;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button btnStream;
+        private System.Windows.Forms.Button btnOLEDB;
+        private System.Windows.Forms.Button btnComObject;
+        private System.Windows.Forms.Button btnXML;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RadioButton rdobtn_tsv;
+        private System.Windows.Forms.RadioButton rdobtn_doc;
+        private System.Windows.Forms.RadioButton rdobtn_xls;
+        private System.Windows.Forms.RadioButton rdobtn_txt;
     }
 }
