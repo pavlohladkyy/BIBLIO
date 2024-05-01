@@ -30,6 +30,15 @@ namespace BIBLIO
 
         private void frmOsoba_Load(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(h.typeUser) && int.Parse(h.typeUser) == 3)
+
+            {
+                AddNew.Visible = false;
+                delete.Visible = false;
+                bindingNamvigatorUpdateItem_Click.Visible = false;
+                dataGridView1.ReadOnly = true;
+            }
+
 
             this.Height = 400;
             h.bs1 = new BindingSource();

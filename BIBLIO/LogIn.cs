@@ -21,26 +21,26 @@ namespace BIBLIO
         DataTable dt;
         public LogIn()
         {
-            
+
             InitializeComponent();
-             h.ConStr = "server = 194.44.236.9; database = sqlipz23_1_gpya;" +
-                 "user = sqlipz23_1_gpya; password = ipz23_gpya; charset = cp1251;";
-             dt = h.myfunDt("SELECT * FROM Users");
+            h.ConStr = "server = 194.44.236.9; database = sqlipz23_1_gpya;" +
+                "user = sqlipz23_1_gpya; password = ipz23_gpya; charset = cp1251;";
+            dt = h.myfunDt("SELECT * FROM Users");
 
 
 
-             int kilkz = dt.Rows.Count;
-             matrix = new string[kilkz, 4];
+            int kilkz = dt.Rows.Count;
+            matrix = new string[kilkz, 4];
 
-             for(int i=0; i < kilkz; i++)
-             {
-                 matrix[i, 0] = dt.Rows[i].Field<int>("id").ToString();
-                 matrix[i, 1] = dt.Rows[i].Field<string>("UsersName");
-                 matrix[i, 2] = dt.Rows[i].Field<int>("Type").ToString();
-                 matrix[i, 3] = dt.Rows[i].Field<string>("Password");
-                 cbxUser.Items.Add(matrix[i, 1]);
-             }
-     
+            for (int i = 0; i < kilkz; i++)
+            {
+                matrix[i, 0] = dt.Rows[i].Field<int>("id").ToString();
+                matrix[i, 1] = dt.Rows[i].Field<string>("UsersName");
+                matrix[i, 2] = dt.Rows[i].Field<int>("Type").ToString();
+                matrix[i, 3] = dt.Rows[i].Field<string>("Password");
+                cbxUser.Items.Add(matrix[i, 1]);
+            }
+
             cbxUser.Text = matrix[0, 1];
             txtPassword.UseSystemPasswordChar = true;
             cbxUser.Focus();
@@ -48,7 +48,7 @@ namespace BIBLIO
 
         private void Avtorization()
         {
-            for(int i = 0; i < matrix.GetLength(0); i++)
+            for (int i = 0; i < matrix.GetLength(0); i++)
             {
                 if (String.Equals(cbxUser.Text.ToUpper(), matrix[i, 1].ToUpper()))
                 {
@@ -68,7 +68,7 @@ namespace BIBLIO
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            
+
             Avtorization();
         }
 
@@ -89,7 +89,7 @@ namespace BIBLIO
             }
         }
 
-        
+
     }
     static class h
     {
@@ -97,7 +97,7 @@ namespace BIBLIO
         public static string ConStr { get; set; }
         public static string typeUser { get; set; }
         public static string nameUser { get; set; }
-       
+
         public static string pathToPhoto { get; set; }
         public static string curVal10 { get; set; }
         public static string keyName { get; set; }
@@ -117,7 +117,7 @@ namespace BIBLIO
 
             return hash;
         }
-       
+
         public static DataTable myfunDt(string commandString)
         {
             DataTable dt = new DataTable();
@@ -127,7 +127,7 @@ namespace BIBLIO
                 try
                 {
                     con.Open();
-                    using(MySqlDataReader dr = cmd.ExecuteReader())
+                    using (MySqlDataReader dr = cmd.ExecuteReader())
                     {
                         if (dr.HasRows)
                         {
@@ -136,7 +136,7 @@ namespace BIBLIO
                     }
                     con.Close();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show("\aнеможливо зв'язатися з sql-серевером! \nПеревірте наявність інтернету...",
                         ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);

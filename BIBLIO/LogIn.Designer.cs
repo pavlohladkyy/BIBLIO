@@ -34,6 +34,7 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.txtPassword = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // cbxUser
@@ -43,7 +44,6 @@
             this.cbxUser.Name = "cbxUser";
             this.cbxUser.Size = new System.Drawing.Size(207, 24);
             this.cbxUser.TabIndex = 3;
-            
             // 
             // label1
             // 
@@ -94,11 +94,19 @@
             this.txtPassword.UseSystemPasswordChar = true;
             this.txtPassword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPassword_KeyDown);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(581, 117);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(478, 22);
+            this.textBox1.TabIndex = 4;
+            // 
             // LogIn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(548, 249);
+            this.ClientSize = new System.Drawing.Size(506, 249);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnOk);
@@ -120,5 +128,6 @@
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.TextBox txtPassword;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
